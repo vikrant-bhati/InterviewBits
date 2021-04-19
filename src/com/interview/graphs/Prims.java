@@ -91,10 +91,10 @@ public class Prims {
 
 
     public void testSolution(int N, int[][] matrix) {
-        boolean[] isVisited = new boolean[N ];
-        int[] parent = new int[N ];
+        boolean[] isVisited = new boolean[N];
+        int[] parent = new int[N];
         Arrays.fill(parent, -1);
-        int[] weight = new int[N ];
+        int[] weight = new int[N];
         Arrays.fill(weight, Integer.MAX_VALUE);
 
         //Assigning the base condition
