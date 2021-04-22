@@ -45,14 +45,15 @@ public class Prims {
         }
     }
 
-    public void testMatrix(){
-       int[][] tempMatrix = { { 0, 2, 0, 6, 0 },
-            { 2, 0, 3, 8, 5 },
-            { 0, 3, 0, 0, 7 },
-            { 6, 8, 0, 0, 9 },
-            { 0, 5, 7, 9, 0 } };
+    public void testMatrix() {
+        int[][] tempMatrix = {
+                {0, 2, 0, 6, 0},
+                {2, 0, 3, 8, 5},
+                {0, 3, 0, 0, 7},
+                {6, 8, 0, 0, 9},
+                {0, 5, 7, 9, 0}};
 
-        testSolution(5,tempMatrix);
+        testSolution(5, tempMatrix);
     }
 
     public void solution(int N) {
@@ -63,29 +64,29 @@ public class Prims {
         Arrays.fill(weight, Integer.MAX_VALUE);
 
         //Assigning the base condition
-        weight[1]=0;
-        isVisited[1]=true;
-        int next=1;
+        weight[1] = 0;
+        isVisited[1] = true;
+        int next = 1;
         // as mst will have n-1 vertices
         for (int i = 1; i < N; i++) {
             int min = Integer.MAX_VALUE;
-            int v=-1;
+            int v = -1;
             //our matrix will be symmetric at i=j
-            for(int j=1;j<=N;j++){
-                if(matrix[next][j]<min && !isVisited[j]){
-                    min=matrix[next][j];
-                    v=j;
+            for (int j = 1; j <= N; j++) {
+                if (matrix[next][j] < min && !isVisited[j]) {
+                    min = matrix[next][j];
+                    v = j;
                 }
             }
-            isVisited[v]=true;
-            parent[v]=next;
-            weight[v]=min;
-            next=v;
+            isVisited[v] = true;
+            parent[v] = next;
+            weight[v] = min;
+            next = v;
 
         }
 
-        System.out.println("Parent : "+ Arrays.toString(parent));
-        System.out.println("Weight : "+Arrays.toString(weight));
+        System.out.println("Parent : " + Arrays.toString(parent));
+        System.out.println("Weight : " + Arrays.toString(weight));
 
     }
 
@@ -98,29 +99,40 @@ public class Prims {
         Arrays.fill(weight, Integer.MAX_VALUE);
 
         //Assigning the base condition
-        weight[0]=0;
-        isVisited[0]=true;
-        int next=0;
+        weight[0] = 0;
+  //      isVisited[0] = true;
+
         // as mst will have n-1 vertices
-        for (int i = 0; i < N-1; i++) {
-            int min = Integer.MAX_VALUE;
-            int v=-1;
+        for (int i = 0; i < N - 1; i++) {
+
+            int v = testUtil(weight, isVisited);
+            isVisited[v] = true;
             //our matrix will be symmetric at i=j
-            for(int j=0;j<N;j++){
-                if(matrix[next][j]<min && matrix[next][j]!=0  && !isVisited[j]){
-                    min=matrix[next][j];
-                    v=j;
+            for (int j = 0; j < N; j++) {
+                if (matrix[v][j] != 0 && !isVisited[j] && matrix[v][j] < weight[j]) {
+                    parent[j] = v;
+                    weight[j] = matrix[v][j];
                 }
             }
-            isVisited[v]=true;
-            parent[v]=next;
-            weight[v]=min;
-            next=v;
 
         }
 
-        System.out.println("Parent : "+ Arrays.toString(parent));
-        System.out.println("Weight : "+Arrays.toString(weight));
+        System.out.println("Parent : " + Arrays.toString(parent));
+        System.out.println("Weight : " + Arrays.toString(weight));
 
+    }
+
+    public int testUtil(int[] a, boolean[] isVisited) {
+        int min = Integer.MAX_VALUE;
+        int index = -1;
+
+        for (int v = 0; v < a.length; v++) {
+            if (min > a[v] && !isVisited[v]) {
+                min = a[v];
+                index = v;
+            }
+        }
+
+        return index;
     }
 }
